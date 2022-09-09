@@ -15,14 +15,14 @@
 // This file contains your configuration used to connect to Cloud IoT Core
 
 // WIFI
-const char* ssid = "MANAGER";
-const char* password = "M@n@g3r2022#";
+const char* ssid = "YOUR-SSID";
+const char* password = "YOUR-WIFIPASSWORD";
 
 // Cloud iot details.
-const char* project_id = "flatbox-serverless-demos";
+const char* project_id = "<YOUR_PROJECT_ID>";
 const char* location = "us-central1";
-const char* registry_id = "esp32registry";
-const char* device_id = "esp32test";
+const char* registry_id = "<NAME_OF_YOUR_REGISTRY>";
+const char* device_id = "<NAME_OF_YOUR_DEVICE>";
 
 // Configuration for NTP
 const char* ntp_primary = "time.google.com";
@@ -37,9 +37,9 @@ const char* ntp_secondary = "pool.ntp.org";
 // it's smaller add "00:" to the start. If it's too big or too small something
 // is probably wrong with your key.
 const char* private_key =
-    "2f:6c:f7:14:6b:0f:1f:f1:8a:74:05:0c:a3:37:5b:"
-    "5e:64:15:57:6c:90:c1:b9:bd:58:02:49:de:b1:dd:"
-    "4f:c7" ;
+    "00:6c:f7:14:6b:0f:1f:f1:8a:74:05:0c:a3:37:5b:"
+    "5e:64:15:57:6c:90:c1:00:bd:58:02:49:de:b1:dd:"
+    "4f:00" ;
 
 // Time (seconds) to expire token += 20 minutes for drift
 const int jwt_exp_secs = 36000; // Maximum 24H (3600*24)
@@ -50,7 +50,7 @@ const char* primary_ca = "-----BEGIN CERTIFICATE-----\n"
         "VQQGEwJVUzEiMCAGA1UEChMZR29vZ2xlIFRydXN0IFNlcnZpY2VzIExMQzERMA8G\n"
         "A1UEAxMIR1RTIExUU1IwHhcNMTgxMTAxMDAwMDQyWhcNNDIxMTAxMDAwMDQyWjBE\n"
         "MQswCQYDVQQGEwJVUzEiMCAGA1UEChMZR29vZ2xlIFRydXN0IFNlcnZpY2VzIExM\n"
-        "QzERMA8GA1UEAxMIR1RTIExUU1IwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAATN\n"
+        "QzERMA8GANOTAREALCERTIFICATE-ORISITCHNKOPQIBBggqhkjOPQMBBwNCAATN\n"
         "8YyO2u+yCQoZdwAkUNv5c3dokfULfrA6QJgFV2XMuENtQZIG5HUOS6jFn8f0ySlV\n"
         "eORCxqFyjDJyRn86d+Iko0IwQDAOBgNVHQ8BAf8EBAMCAYYwDwYDVR0TAQH/BAUw\n"
         "AwEB/zAdBgNVHQ4EFgQUPv7/zFLrvzQ+PfNA0OQlsV+4u1IwCgYIKoZIzj0EAwID\n"
@@ -62,7 +62,7 @@ const char* backup_ca = "-----BEGIN CERTIFICATE-----\n"
         "MIIB4TCCAYegAwIBAgIRKjikHJYKBN5CsiilC+g0mAIwCgYIKoZIzj0EAwIwUDEk\n"
         "MCIGA1UECxMbR2xvYmFsU2lnbiBFQ0MgUm9vdCBDQSAtIFI0MRMwEQYDVQQKEwpH\n"
         "bG9iYWxTaWduMRMwEQYDVQQDEwpHbG9iYWxTaWduMB4XDTEyMTExMzAwMDAwMFoX\n"
-        "DTM4MDExOTAzMTQwN1owUDEkMCIGA1UECxMbR2xvYmFsU2lnbiBFQ0MgUm9vdCBD\n"
+        "DTM4MDExOTAzMTQwNOTAREALCERTIFICATE-ORISITCHNKlnbiBFQ0MgUm9vdCBD\n"
         "QSAtIFI0MRMwEQYDVQQKEwpHbG9iYWxTaWduMRMwEQYDVQQDEwpHbG9iYWxTaWdu\n"
         "MFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEuMZ5049sJQ6fLjkZHAOkrprlOQcJ\n"
         "FspjsbmG+IpXwVfOQvpzofdlQv8ewQCybnMO/8ch5RikqtlxP6jUuc6MHaNCMEAw\n"
