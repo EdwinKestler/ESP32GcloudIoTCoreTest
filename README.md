@@ -23,13 +23,14 @@ open your Google Cloud SDK terminal:
  :> gcloud init 
  (configure your identity, project, zone (example: us-central1-a))
 
- //create the ca_certificate files 
- 
+ //create the ca_certificate files
  :>openssl genpkey -algorithm RSA -out ca_private_registry.pem -pkeyopt rsa_keygen_bits:2048
+ :>openssl req -x509 -new -nodes -key ca_private_registry.pem -sha256 -out ca_cert_registry.pem -subj "/CN=unused"
+ 
+ //register the credentials you entered. 
+ :>gcloud iot registries credentials create --path=ca_cert_registry.pem  --project=<YOUR_PROJECT_ID>  --registry=<NAME_OF_YOUR_REGISTRY> --region=<YOUR_REGION> (ex: us-central1) <-- NOT us-cenral1-a.
 
  //NOTE: if error similar to openssl not a valid command: chek "/your-install-folder/openssl/bin" is configured in windos ENVIROMENT VARIABLES "PATH" THEN:
-
-  :>openssl req -x509 -new -nodes -key ca_private_registry.pem -sha256 -out ca_cert_registry.pem -subj "/CN=unused"
  
  //create a Pub/sub Publish topic
  :> gcloud pubsub topics create <YOUR_PUB/SUB_PUBLISH_TOPIC> --project=<YOUR_PROJECT_ID>
@@ -43,16 +44,15 @@ open your Google Cloud SDK terminal:
  //if you have configured a recistry on the google cloud web console:
   :> gcloud iot registries describe <NAME_OF_YOUR_REGISTRY> --project=<YOUR_PROJECT_ID>  --region=<YOUR_REGION> (ex: us-central1) <-- NOT us-cenral1-a.
 
-  //create a device.
-  :>gcloud iot devices create <NAME_OF_YOUR_DEVICE> --project=<YOUR_PROJECT_ID> --region=<YOUR_REGION> --registry=<NAME_OF_YOUR_REGISTRY> --public-key path=/path/to/rsa_cert.pem,type=rs256
+//Generate an Eliptic Curve (EC) private / public key pair:
+    :> openssl ecparam -genkey -name prime256v1 -noout -out ec_private_device1.pem
+    :> openssl req -new -sha256 -key ec_private_device1.pem -out ec_cert_device1.csr -subj "/CN=unused-device"
+    :> openssl x509 -req -in ec_cert_device1.csr -CA ca_cert_registry.pem -CAkey ca_private_registry.pem -CAcreateserial -sha256 -out ec_cert_device1.pem
 
-//register the credentials you entered. 
- :>gcloud iot registries credentials create --path=ca_cert_registry.pem  --project=<YOUR_PROJECT_ID>  --registry=<NAME_OF_YOUR_REGISTRY> --region=<YOUR_REGION> (ex: us-central1) <-- NOT us-cenral1-a.
+//create a device.
+  :> gcloud iot devices create <NAME_OF_YOUR_DEVICE> --project=<YOUR_PROJECT_ID> --region=<YOUR_REGION> --registry=<NAME_OF_YOUR_REGISTRY> --public-key path=/path/to/ec_cert_device1.pem,type=es256-x509-pem
 
- //create device certificates.
- :>openssl x509 -req -in ec_cert_device1.csr -CA ca_cert_registry.pem -CAkey ca_private_registry.pem -CAcreateserial -sha256 -out ec_cert_device1.pem
-
- //In Web console upload Certificate to device in google cloud iot registry, in authentication tab. choose add public key and choose file:
+//In Web console upload Certificate to device in google cloud iot registry, in authentication tab. choose add public key and choose file:
  "ec_cert_device1.pem" as type ES256_X509
 
 //Print the Private part of the certificate generated and copy to the variable "private_key" in "ciotc_config.h" file 
